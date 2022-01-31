@@ -1,0 +1,40 @@
+name: get-scr-os-deps
+
+inputs:
+  os:
+    description: 'os'
+    required: true
+  mpi:
+    description: 'MPI status'
+    required: false
+    default: par
+
+runs:
+  steps:
+    - name: get pdsh lcov (Linux)
+      if: inputs.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get install pdsh
+        sudo apt-get install lcov
+
+    - name: get mpi (Linux)
+      if: inputs.mpi == 'par' && inputs.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get install mpich libmpich-dev
+
+    - name: Set up Homebrew
+      if: inputs.os == 'macos-10.15'
+      uses: Homebrew/actions/setup-homebrew@c4aafe8c4620bf08883dd4679c374f11e73329d3
+
+    - name: get lcov pdsh (MacOS)
+      if: matrix.codecov == 'YES' && matrix.os == 'macos-10.15'
+      run: |
+        export HOMEBREW_NO_INSTALL_CLEANUP=1
+        brew install lcov
+        brew install pdsh
+
+    - name: get MPI (MacOS)
+      if: matrix.mpi == 'par' && matrix.os == 'macos-10.15'
+      run: |
+        export HOMEBREW_NO_INSTALL_CLEANUP=1
+        brew install openmpi
