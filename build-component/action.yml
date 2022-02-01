@@ -1,0 +1,31 @@
+name: build-component
+description: build ecp-veloc component
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+  mpi:
+    description: 'MPI status'
+    required: false
+    default: par
+
+runs:
+  using: "composite"
+  steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        path: ${{ inputs.component }}
+        fetch-depth: 0
+
+    - name: build and install
+      shell: bash
+      run: |
+        mkdir -p install
+        cd ${{ inputs.component }}
+        mkdir build
+        cd build
+        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -DCMAKE_INSTALL_PREFIX=../../install
+        make
+        make install
