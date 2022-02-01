@@ -14,6 +14,7 @@ runs:
   using: "composite"
   steps:
     - name: echo config
+      shell: bash
       run: |
         echo "Running ecp-veloc/github-actions/get-scr-os-deps@main with:"
         echo "${{ inputs.os }}"
@@ -21,16 +22,16 @@ runs:
 
     - name: get pdsh lcov (Linux)
       if: startsWith(inputs.os, 'ubuntu')
+      shell: bash
       run: |
         sudo apt-get install pdsh
         sudo apt-get install lcov
-      shell: bash
 
     - name: get mpi (Linux)
       if: inputs.mpi == 'par' && startsWith(inputs.os, 'ubuntu')
+      shell: bash
       run: |
         sudo apt-get install mpich libmpich-dev
-      shell: bash
 
     - name: Set up Homebrew
       if: startsWith(inputs.os, 'macos')
@@ -38,15 +39,15 @@ runs:
 
     - name: get lcov pdsh (MacOS)
       if: startsWith(inputs.os, 'macos')
+      shell: bash
       run: |
         export HOMEBREW_NO_INSTALL_CLEANUP=1
         brew install lcov
         brew install pdsh
-      shell: bash
 
     - name: get MPI (MacOS)
       if: inputs.mpi == 'par' && startsWith(inputs.os, 'macos')
+      shell: bash
       run: |
         export HOMEBREW_NO_INSTALL_CLEANUP=1
         brew install openmpi
-      shell: bash
