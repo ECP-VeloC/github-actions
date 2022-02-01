@@ -1,4 +1,4 @@
-name: build-component
+name: build-ecp-veloc-component
 description: build ecp-veloc component
 
 inputs:
@@ -16,8 +16,8 @@ runs:
     - name: checkout
       uses: actions/checkout@v2
       with:
+        repository: ecp-veloc/${{ inputs.component }}
         path: ${{ inputs.component }}
-        fetch-depth: 0
 
     - name: build and install
       shell: bash
