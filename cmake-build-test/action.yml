@@ -1,0 +1,42 @@
+name: cmake-build-test
+description: build and test with cmake
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+  target:
+    description: 'CMake Build Type'
+    required: false
+    default: Release
+  cmake_line:
+    description: 'Additional CMake build options'
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        path: ${{ inputs.component }}
+
+    - name: configure
+      shell: bash
+      run: |
+        mkdir build
+        cd build
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} ${{ inputs.cmake_line }}
+
+    - name: build
+      shell: bash
+      run: |
+        cd build
+        make
+
+    - name: test
+      shell: bash
+      run: |
+        cd build
+        make check
