@@ -1,5 +1,5 @@
-name: cmake-build-test
-description: build and test with cmake
+name: cmake-build-only
+description: build only with cmake
 
 inputs:
   component:
@@ -31,3 +31,9 @@ runs:
       run: |
         cd build
         make
+
+    - name: test
+      shell: bash
+      run: |
+        cd build
+        make check
