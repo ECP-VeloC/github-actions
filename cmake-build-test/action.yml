@@ -31,3 +31,9 @@ runs:
       run: |
         cd build
         make
+
+    - name: test
+      shell: bash
+      run: |
+        cd build
+        make check
