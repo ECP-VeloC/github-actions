@@ -1,0 +1,28 @@
+name: cmake-build-static
+description: build static with cmake
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+  target:
+    description: 'CMake Build Type'
+    required: false
+    default: Release
+  cmake_line:
+    description: 'Additional CMake build options'
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: build static
+      shell: bash
+      run: |
+        mkdir build-static
+        mkdir -p install
+        cd build-static
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -D$(echo ${{ input.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }}
+        make
