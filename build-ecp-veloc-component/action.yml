@@ -1,5 +1,5 @@
 name: build-ecp-veloc-component
-description: build ecp-veloc component
+description: checkout, build, and install named ecp-veloc component
 
 inputs:
   component:
@@ -9,6 +9,15 @@ inputs:
     description: 'MPI status'
     required: false
     default: par
+  static:
+    description: 'static library build'
+    required: false
+    default: false
+  ref:
+    description: 'SHA or tag to checkout'
+    required: false
+    default: ''
+
 
 runs:
   using: "composite"
@@ -18,6 +27,7 @@ runs:
       with:
         repository: ecp-veloc/${{ inputs.component }}
         path: ${{ inputs.component }}
+        ref: ${{ inputs.ref }}
 
     - name: build and install
       shell: bash
@@ -26,6 +36,6 @@ runs:
         cd ${{ inputs.component }}
         mkdir build
         cd build
-        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -DCMAKE_INSTALL_PREFIX=../../install
+        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=${{ inputs.static }} -DCMAKE_INSTALL_PREFIX=../../install
         make
         make install
