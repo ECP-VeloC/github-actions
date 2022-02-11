@@ -18,16 +18,11 @@ runs:
   using: "composite"
   steps:
 
-    - name: configure
+    - name: build
       shell: bash
       run: |
         mkdir build
         mkdir -p install
         cd build
         cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }}
-
-    - name: build
-      shell: bash
-      run: |
-        cd build
         make
