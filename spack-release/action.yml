@@ -1,0 +1,48 @@
+name: spack-release
+description: update the spack package with a new version
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: echo config
+      shell: bash
+      run: |
+        echo "Running ecp-veloc/github-actions/spack-release@main with:"
+        echo "${{ inputs.component }}"
+
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        repository: spack/spack
+
+    - name: update package release
+      shell: bash
+      run: |
+        cd spack
+        bin/spack versions --new ${{ inputs.component }} | tail -n +2
+        verhash=`bin/spack checksum --latest ${{ inputs.component }} | tail -r -n 2 | tail -n 1`
+        pkgfile="$(bin/spack location -p er)/package.py"
+        awk -v newver="$verhash" '/version\('\''main/ {print; print newver; next} {print;}' $pkgfile >> tmp-${{ inputs.component }}-package.py
+        mv tmp-${{ inputs.component }}-package.py $pkgfile
+        rm tmp-${{ inputs.component }}-package.py
+
+    - name: verify spack fetch
+      shell: bash
+      run: |
+        cd spack
+        bin/spack fetch ${{ inputs.component }}
+
+    - name: commit and push update
+      shell: bash
+      run: |
+        cd spack
+        git checkout -b release-${{ inputs.component }}
+        git remote add ecpv https://github.com/ecp-veloc/spack
+        git commit -a "new release for ${{ inputs.component }}"
+        git push ecpv release-${{ inputs.component }}
+        echo "Don't forget to create the spack PR"
