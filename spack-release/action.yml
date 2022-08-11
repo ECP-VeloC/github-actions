@@ -23,9 +23,6 @@ runs:
     - name: update package release
       shell: bash
       run: |
-        pwd
-        ls -al
-        #cd spack
         bin/spack versions --new ${{ inputs.component }} | tail -n +2
         verhash=`bin/spack checksum --latest ${{ inputs.component }} | tail -r -n 2 | tail -n 1`
         pkgfile="$(bin/spack location -p er)/package.py"
@@ -36,13 +33,11 @@ runs:
     - name: verify spack fetch
       shell: bash
       run: |
-        cd spack
         bin/spack fetch ${{ inputs.component }}
 
     - name: commit and push update
       shell: bash
       run: |
-        cd spack
         git checkout -b release-${{ inputs.component }}
         git remote add ecpv https://github.com/ecp-veloc/spack
         git commit -a "new release for ${{ inputs.component }}"
