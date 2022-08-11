@@ -21,9 +21,9 @@ runs:
         repository: spack/spack
 
     - name: update package release
-      shell: bash -x
+      shell: bash
       run: |
-        bin/spack versions --new ${{ inputs.component }} | tail -n +2
+        echo `bin/spack versions --new ${{ inputs.component }} | tail -n +2`
         verhash=`bin/spack checksum --latest ${{ inputs.component }} | tac | head -n 2 | tail -n 1`
         echo $verhash
         pkgfile="$(bin/spack location -p ${{ inputs.component }})/package.py"
