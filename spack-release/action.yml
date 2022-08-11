@@ -39,6 +39,6 @@ runs:
       run: |
         git checkout -b release-${{ inputs.component }}
         git remote add ecpv https://github.com/ecp-veloc/spack
-        git commit -a "new release for ${{ inputs.component }}"
+        git commit -am "new release for ${{ inputs.component }}"
         git push ecpv release-${{ inputs.component }}
         echo "Don't forget to create the spack PR"
