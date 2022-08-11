@@ -28,7 +28,6 @@ runs:
         pkgfile="$(bin/spack location -p er)/package.py"
         awk -v newver="$verhash" '/version\('\''main/ {print; print newver; next} {print;}' $pkgfile >> tmp-${{ inputs.component }}-package.py
         mv tmp-${{ inputs.component }}-package.py $pkgfile
-        rm tmp-${{ inputs.component }}-package.py
 
     - name: verify spack fetch
       shell: bash
