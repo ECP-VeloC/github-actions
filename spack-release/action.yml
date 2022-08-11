@@ -46,5 +46,5 @@ runs:
         git config user.name  "ECP Veloc GitHub Action"
         git commit -am "new release for ${{ inputs.component }}"
         git remote add ecpv https://github.com/ecp-veloc/spack
-        git push ecpv release-${{ inputs.component }}
+        git push ecpv release-${{ inputs.component }}-`date "+%Y%m%d"`
         echo "Don't forget to create the spack PR"
