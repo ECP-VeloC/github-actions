@@ -24,7 +24,7 @@ runs:
       shell: bash
       run: |
         bin/spack versions --new ${{ inputs.component }} | tail -n +2
-        verhash=`bin/spack checksum --latest ${{ inputs.component }} | tail -r -n 2 | tail -n 1`
+        verhash=`bin/spack checksum --latest ${{ inputs.component }} | tac | head -n 2 | tail -n 1`
         pkgfile="$(bin/spack location -p er)/package.py"
         awk -v newver="$verhash" '/version\('\''main/ {print; print newver; next} {print;}' $pkgfile >> tmp-${{ inputs.component }}-package.py
         mv tmp-${{ inputs.component }}-package.py $pkgfile
