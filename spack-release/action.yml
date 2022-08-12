@@ -9,10 +9,11 @@ inputs:
     description: 'secret access token'
     required: true
 
+env:
+  SPACK_TOKEN: ${{ inputs.spack_token }}
+
 runs:
   using: "composite"
-  env:
-    SPACK_TOKEN: ${{ inputs.spack_token }}
   steps:
     - name: echo config
       shell: bash
