@@ -16,7 +16,7 @@ runs:
         echo "${{ inputs.component }}"
 
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: spack/spack
         token: ${{ secrets.spack_release_token }}
