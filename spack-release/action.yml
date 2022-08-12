@@ -5,6 +5,9 @@ inputs:
   component:
     description: 'component name'
     required: true
+  spack-token:
+    description: 'secret access token'
+    required: true
 
 runs:
   using: "composite"
@@ -19,7 +22,7 @@ runs:
       uses: actions/checkout@v3
       with:
         repository: spack/spack
-        token: ${{ secrets.spack_release_token }}
+        token: ${{ inputs.spack-token }}
 
     - name: update package release
       shell: bash
