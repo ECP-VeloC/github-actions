@@ -17,6 +17,7 @@ runs:
       run: |
         echo "Running ecp-veloc/github-actions/spack-release@main with:"
         echo "${{ inputs.component }}"
+        if [[ ${{ inputs.spack-token }} -eq "" ]]; then echo "empty token"; fi
 
     - name: checkout
       uses: actions/checkout@v2
