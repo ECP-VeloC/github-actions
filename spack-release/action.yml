@@ -9,14 +9,13 @@ inputs:
     description: 'secret access token'
     required: true
 
-env:
-  SPACK_TOKEN: ${{ inputs.spack_token }}
-
 runs:
   using: "composite"
   steps:
     - name: echo config
       shell: bash
+      env:
+        SPACK_TOKEN: ${{ inputs.spack_token }}
       run: |
         echo "Running ecp-veloc/github-actions/spack-release@main with:"
         echo "${{ inputs.component }}"
@@ -46,6 +45,8 @@ runs:
 
     - name: commit and push update
       shell: bash
+      env:
+        SPACK_TOKEN: ${{ inputs.spack_token }}
       run: |
         git status
         git diff
