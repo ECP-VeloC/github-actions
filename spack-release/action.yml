@@ -19,10 +19,9 @@ runs:
         echo "${{ inputs.component }}"
 
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
       with:
         repository: spack/spack
-        token: ${{ inputs.spack-token }}
 
     - name: update package release
       shell: bash
@@ -49,6 +48,6 @@ runs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git commit -am "new release for ${{ inputs.component }}"
-        git remote add ecpv https://github.com/ecp-veloc/spack
+        git remote add ecpv https://${{ inputs.spack-token }}@github.com/ecp-veloc/spack
         git push ecpv release-${{ inputs.component }}-`date "+%Y%m%d"`
         echo "Don't forget to create the spack PR"
