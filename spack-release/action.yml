@@ -11,6 +11,8 @@ inputs:
 
 runs:
   using: "composite"
+  env:
+    SPACK_TOKEN: ${{ inputs.spack_token }}
   steps:
     - name: echo config
       shell: bash
@@ -18,6 +20,7 @@ runs:
         echo "Running ecp-veloc/github-actions/spack-release@main with:"
         echo "${{ inputs.component }}"
         if [[ ${{ inputs.spack_token }} -eq "" ]]; then echo "empty token"; fi
+        if [[ $SPACK_TOKEN -eq "" ]]; then echo "empty token"; fi
 
     - name: checkout
       uses: actions/checkout@v2
@@ -49,6 +52,6 @@ runs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git commit -am "new release for ${{ inputs.component }}"
-        git remote add ecpv https://${{ inputs.spack_token }}@github.com/ecp-veloc/spack
+        git remote add ecpv https://$SPACK_TOKEN@github.com/ecp-veloc/spack
         git push ecpv release-${{ inputs.component }}-`date "+%Y%m%d"`
         echo "Don't forget to create the spack PR"
