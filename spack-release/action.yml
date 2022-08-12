@@ -5,7 +5,7 @@ inputs:
   component:
     description: 'component name'
     required: true
-  spack-token:
+  spack_token:
     description: 'secret access token'
     required: true
 
@@ -17,7 +17,7 @@ runs:
       run: |
         echo "Running ecp-veloc/github-actions/spack-release@main with:"
         echo "${{ inputs.component }}"
-        if [[ ${{ inputs.spack-token }} -eq "" ]]; then echo "empty token"; fi
+        if [[ ${{ inputs.spack_token }} -eq "" ]]; then echo "empty token"; fi
 
     - name: checkout
       uses: actions/checkout@v2
