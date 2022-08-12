@@ -10,6 +10,9 @@ These actions are for use by the ECP-VELOC components, namely:
 - [shuffiles](https://github.com/ecp-veloc/shuffiles)
 - [er](https://github.com/ecp-veloc/er)
 
+Note that these are "composite actions" not "reusable workflows" in GitHub Actions parlance.
+More details on composite actions can be found in the [GitHub Actions docs](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action).
+
 ## Actions
 
 ### `get-scr-os-deps`
