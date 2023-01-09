@@ -23,7 +23,7 @@ runs:
         if [[ $SPACK_TOKEN -eq "" ]]; then echo "empty token"; fi
 
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: spack/spack
 

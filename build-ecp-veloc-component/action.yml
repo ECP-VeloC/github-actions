@@ -23,7 +23,7 @@ runs:
   using: "composite"
   steps:
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: ecp-veloc/${{ inputs.component }}
         path: ${{ inputs.component }}
