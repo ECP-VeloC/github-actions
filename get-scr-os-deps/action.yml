@@ -35,7 +35,7 @@ runs:
 
     - name: Set up Homebrew
       if: startsWith(inputs.os, 'macos')
-      uses: Homebrew/actions/setup-homebrew@c4aafe8c4620bf08883dd4679c374f11e73329d3
+      uses: Homebrew/actions/setup-homebrew@master
 
     - name: get lcov pdsh (MacOS)
       if: startsWith(inputs.os, 'macos')
