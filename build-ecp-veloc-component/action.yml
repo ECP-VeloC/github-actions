@@ -9,10 +9,14 @@ inputs:
     description: 'MPI status'
     required: false
     default: par
-  static:
-    description: 'static library build'
+  shared:
+    description: 'enable build of shared library: build-shared, build-static'
     required: false
-    default: false
+    default: build-shared
+  static:
+    description: 'link binaries to which lib: link-shared, link-static'
+    required: false
+    default: link-shared
   ref:
     description: 'SHA or tag to checkout'
     required: false
@@ -36,6 +40,6 @@ runs:
         cd ${{ inputs.component }}
         mkdir build
         cd build
-        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=${{ inputs.static }} -DCMAKE_INSTALL_PREFIX=../../install
+        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -DBUILD_SHARED_LIBS=${{ inputs.shared == 'build-shared' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=${{ inputs.static == 'link-static' }} -DCMAKE_INSTALL_PREFIX=../../install
         make
         make install

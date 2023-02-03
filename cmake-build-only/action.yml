@@ -9,6 +9,14 @@ inputs:
     description: 'CMake Build Type'
     required: false
     default: Release
+  shared:
+    description: 'enable build of shared library: build-shared, build-static'
+    required: false
+    default: build-shared
+  static:
+    description: 'link binaries to which lib: link-shared, link-static'
+    required: false
+    default: link-shared
   cmake_line:
     description: 'Additional CMake build options'
     required: false
@@ -24,5 +32,5 @@ runs:
         mkdir build
         mkdir -p install
         cd build
-        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }}
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DBUILD_SHARED_LIBS=${{ inputs.shared == 'build-shared' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=${{ inputs.static == 'link-static' }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }}
         make
