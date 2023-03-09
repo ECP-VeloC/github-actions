@@ -29,7 +29,7 @@ runs:
         mkdir build
         mkdir -p install
         cd build
-        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED=OFF -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED_LIBS=OFF -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON
         make
 
     - name: build shared
@@ -39,5 +39,5 @@ runs:
         mkdir build
         mkdir -p install
         cd build
-        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED=ON -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=OFF
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED_LIBS=ON -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=OFF
         make

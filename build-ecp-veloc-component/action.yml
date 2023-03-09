@@ -36,7 +36,7 @@ runs:
         cd ${{ inputs.component }}
         mkdir build
         cd build
-        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON -DBUILD_SHARED=OFF -DCMAKE_INSTALL_PREFIX=../../install
+        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=../../install
         make
         make install
 
@@ -48,6 +48,6 @@ runs:
         cd ${{ inputs.component }}
         mkdir build
         cd build
-        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=OFF -DBUILD_SHARED=ON -DCMAKE_INSTALL_PREFIX=../../install
+        cmake ../ -DMPI=${{ inputs.mpi == 'par' }} -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=OFF -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=../../install
         make
         make install
