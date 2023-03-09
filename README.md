@@ -81,3 +81,12 @@ For components that can be tested, this runs `make check` (a verbose version of 
 
 It is intended that *all* components will have a `cmake-test` step in their build-and-test action.
 However, for components where multi-node testing is necessary, the test step can be disabled with an `if: false` qualifier.
+
+
+## Deprecated Actions
+
+Once all components are migrated, these actions will be removed.
+
+- cmake-build-only
+- cmake-build-static
+- cmake-build-test
