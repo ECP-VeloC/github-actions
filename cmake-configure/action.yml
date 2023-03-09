@@ -1,0 +1,43 @@
+name: cmake-configure
+description: configure cmake
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+  target:
+    description: 'CMake Build Type'
+    required: false
+    default: Release
+  cmake_line:
+    description: 'Additional CMake build options'
+    required: false
+    default: ""
+  static:
+    description: 'Build only the static library'
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: build static
+      if: ${{ inputs.static }}
+      shell: bash
+      run: |
+        mkdir build
+        mkdir -p install
+        cd build
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED=OFF -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=ON
+        make
+
+    - name: build shared
+      if: ${{ ! inputs.static }}
+      shell: bash
+      run: |
+        mkdir build
+        mkdir -p install
+        cd build
+        cmake ../${{ inputs.component }} -DCMAKE_BUILD_TYPE=${{ inputs.target }} -DCMAKE_INSTALL_PREFIX=../install ${{ inputs.cmake_line }} -DBUILD_SHARED=ON -D$(echo ${{ inputs.component }} | tr 'a-z' 'A-Z')_LINK_STATIC=OFF
+        make

@@ -1,0 +1,19 @@
+name: cmake-build
+description: build with cmake
+
+## assumes cmake-configure action has already run
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: build
+      shell: bash
+      run: |
+        cd build
+        make

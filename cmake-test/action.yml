@@ -1,0 +1,19 @@
+name: cmake-test
+description: test with cmake
+
+## assumes cmake-build action has already run
+
+inputs:
+  component:
+    description: 'component name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: test
+      shell: bash
+      run: |
+        cd build
+        make check
