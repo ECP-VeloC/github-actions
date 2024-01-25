@@ -9,6 +9,10 @@ inputs:
     description: 'MPI status'
     required: false
     default: par
+  autotools:
+    description: 'install autotools'
+    required: false
+    default: false
 
 runs:
   using: "composite"
@@ -19,6 +23,7 @@ runs:
         echo "Running ecp-veloc/github-actions/get-scr-os-deps@main with:"
         echo "${{ inputs.os }}"
         echo "${{ inputs.mpi }}"
+        echo "${{ inputs.autotools }}"
 
     - name: get pdsh lcov (Linux)
       if: startsWith(inputs.os, 'ubuntu')
@@ -52,3 +57,11 @@ runs:
         export HOMEBREW_NO_INSTALL_CLEANUP=1
         export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
         brew install openmpi
+
+    - name: install autotools (MacOS)
+      if: inputs.autotools && startsWith(inputs.os, 'macos')
+      shell: bash
+      run: |
+        export HOMEBREW_NO_INSTALL_CLEANUP=1
+        export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+        brew install libtool autoconf automake

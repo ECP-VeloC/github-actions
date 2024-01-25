@@ -36,6 +36,8 @@ Install the OS packages, including:
 - MPI (if called for, on by default)
 - pdsh
 - lcov (for code coverage)
+- (optional) autotools, including libtool, automake, and autoconf.
+  These are needed for lwgrp and dtcmp, but not the components.
 
 This action works for both ubuntu and macOS targets.
 
